@@ -1,0 +1,20 @@
+.top-menu {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  width: calc(100vw - 37px);
+  div {
+    display: inline-block;
+    margin: 0 10px;
+  }
+}
+#root{
+  min-height: 100vh;
+  .content{
+    padding: 50px 0px 0px 0px;
+  }
+}
