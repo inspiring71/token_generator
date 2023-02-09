@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import styles from "./SendToken.module.scss";
 // import { useMutation } from "react-query";
 
-function SendToken() {
+function SendToken({navigator}: {navigator: ReactElement}) {
   let [forminfo, setFormInfo] = useState({
     username: "",
     token: "",
@@ -65,6 +65,7 @@ function SendToken() {
   return (
     <div>
       <div className={styles.wrapper}>
+        {navigator}
         <form>
           {resultBox}
           <div>

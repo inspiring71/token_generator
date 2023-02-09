@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { ReactElement, useMemo, useState } from "react";
 import "./App.scss";
 import SendToken from "./SendToken/SendToken";
 import GetToken from "./GetToken/GetToken";
 
 const pages = {
-  "send-token": <SendToken />,
-  "see-tokens": <GetToken />,
+  "send-token": SendToken,
+  "see-tokens": GetToken,
+};
+const getPage = (page: keyof typeof pages, navigator: ReactElement) => {
+  const Component = pages[page];
+  return <Component navigator={navigator}/>;
 };
 
 function App() {
+  const pageButtons = useMemo(() => {
+    return (
+      <div>
+        <button type="button" className="" onClick={() => setPage("see-tokens")}>
+          Shar your tokens
+        </button>
+        <button type="button" onClick={() => setPage("send-token")}>
+          Get token list from server
+        </button>
+      </div>
+    );
+  }, []);
   const [page, setPage] = useState<keyof typeof pages>("see-tokens");
   return (
     <div className="App">
@@ -24,9 +40,7 @@ function App() {
           </a>
         </div>
       </div>
-      <div className="content">
-        {pages[page]}
-      </div>
+      <div className="content">{getPage(page,pageButtons)}</div>
     </div>
   );
 }

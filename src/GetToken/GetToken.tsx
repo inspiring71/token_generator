@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import styles from "./GetToken.module.scss";
 // import { useMutation } from "react-query";
 
-function GetToken() {
+function GetToken({navigator:navBtns}: {navigator: ReactElement}) {
   let [forminfo, setFormInfo] = useState({
     passcode: "",
   });
@@ -82,6 +82,7 @@ function GetToken() {
   return (
     <div>
       <div className={styles.wrapper}>
+        {navBtns}
         <form>
           {resultBox}
           <div>
