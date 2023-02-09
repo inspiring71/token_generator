@@ -16,10 +16,10 @@ function App() {
   const pageButtons = useMemo(() => {
     return (
       <div>
-        <button type="button" className="" onClick={() => setPage("see-tokens")}>
+        <button type="button" className="" onClick={() => setPage("send-token")}>
           Shar your tokens
         </button>
-        <button type="button" onClick={() => setPage("send-token")}>
+        <button type="button" onClick={() => setPage("see-tokens")}>
           Get token list from server
         </button>
       </div>

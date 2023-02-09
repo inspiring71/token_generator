@@ -1,7 +1,19 @@
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import styles from "./GetToken.module.scss";
 // import { useMutation } from "react-query";
-
+function unsecuredCopyToClipboard(text:string) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+  } catch (err) {
+    console.error('Unable to copy to clipboard', err);
+  }
+  document.body.removeChild(textArea);
+}
 function GetToken({navigator:navBtns}: {navigator: ReactElement}) {
   let [forminfo, setFormInfo] = useState({
     passcode: "",
@@ -12,7 +24,11 @@ function GetToken({navigator:navBtns}: {navigator: ReactElement}) {
     let text = `tokenList=[${tokenList
       .map((token) => `("${token[0]}":"${token[1]}")`)
       .join(",")}]`;
-    navigator.clipboard.writeText(text);
+    try{
+      navigator.clipboard.writeText(text);
+    }catch(e){
+      unsecuredCopyToClipboard(text);
+    }
     alert("text copied to clipboard!");
   }, []);
   const saveToServer = useCallback(
