@@ -1,0 +1,41 @@
+name: Deploy manager lambda Runner
+
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+    types:
+      - closed
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deploy to production"
+        required: true
+        default: prod
+
+
+
+jobs:
+  deploy_lambda_on_master:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          python-version: '18.14' 
+      - run: npm ci
+      - name: Building project
+        run: npm run build
+      - name: Configure AWS credentials from AWS account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
+          role-session-name: deploy-lambda
+          aws-region: us-east-2
+      - name: Deploy to S3 bucket
+        run: aws s3 sync ./dist/ s3://serverless-rebels --delete
