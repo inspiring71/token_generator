@@ -22,7 +22,7 @@ function GetToken({navigator:navBtns}: {navigator: ReactElement}) {
   // use react query to send post request to server
   const copyText = useCallback((tokenList: Array<Array<string>>) => {
     let text = `tokenList=[${tokenList
-      .map((token) => `("${token[0]}":"${token[1]}")`)
+      .map((token) => `("${token[0]}","${token[1]}")`)
       .join(",")}]`;
     try{
       navigator.clipboard.writeText(text);
@@ -60,7 +60,7 @@ function GetToken({navigator:navBtns}: {navigator: ReactElement}) {
             <pre style={{ overflow: "scroll" }}>
               tokenList=[
               {tokenList
-                .map((token) => `("${token[0]}":"${token[1]}")`)
+                .map((token) => `("${token[0]}","${token[1]}")`)
                 .join(",")}
               ]
             </pre>
